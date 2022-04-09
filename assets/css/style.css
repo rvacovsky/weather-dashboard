@@ -39,11 +39,9 @@ body {
     vertical-align: middle;
 }
 
-.g-col-2 {
-    
+.col-sm {
     justify-content: space-between;
     background-color: blue;
     color: white;
     margin: 10px;
-    
 }
