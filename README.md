@@ -1,6 +1,7 @@
 # weather-dashboard
 
 <h2>User Story</h2>
+
 AS A traveler
 
 I WANT to see the weather outlook for multiple cities
@@ -8,6 +9,7 @@ I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
 
 <h2>Acceptance Criteria</h2>
+
 GIVEN a weather dashboard with form inputs
 
 WHEN I search for a city
