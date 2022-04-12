@@ -9,6 +9,11 @@ body {
     text-align: center;
 }
 
+.input-group-text:hover {
+    background-image: linear-gradient(45deg, blue 0%, blueviolet 90%, indigo 52%);
+    color: white;
+}
+
 .container-md {
     display: inline-block;
     background-color: lightgray;
