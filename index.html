@@ -20,9 +20,23 @@
             <button type="submit" class="input-group-text" id="inputGroup-sizing-default">Search</button>
         </form>
     </div>
-    <div class="container-lg border">
-      <p>city</p>
-      <!-- <div id="temp"></div>   -->
+    <div class="container-lg current border rounded">
+      <p>Today's Weather</p>
+      <p id="currentDay"></p>
+      <p id="city-result" class="city-result"></p>
+      <div class="row">
+        <div id="temp"></div>
+      </div>
+      <div class="row">
+        <div id="wind"></div>
+      </div>
+      <div class="row">
+        <div id="humidity"></div>
+      </div>
+      <div class="row">
+        <div id="UV-index"></div>
+      </div>
+    
     </div>
     <!-- <div class="col gy-5">
       <div class="col-4">
@@ -54,13 +68,15 @@
   <div class="container">
     <h3>5-Day Forecast</h3>
     <div class="row">
-      <div class="col-sm border rounded">Monday</div>
-      <div class="col-sm border rounded">Tuesday</div>
-      <div class="col-sm border rounded">Wednesday</div>
-      <div class="col-sm border rounded">Thursday</div>
-      <div class="col-sm border rounded">Friday</div>
+      <div class="forecast col-sm  border rounded"></div>
+      <div class="col-sm forecast border rounded"></div>
+      <div class="col-sm forecast border rounded"></div>
+      <div class="col-sm forecast border rounded"></div>
+      <div class="col-sm forecast border rounded"></div>
     </div>
   </div>
 </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </html>

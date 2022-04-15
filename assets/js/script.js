@@ -1,6 +1,14 @@
 var cityFormEl = document.querySelector("#city-search");
 var cityInputEl = document.querySelector("#city");
+var cityResult = document.getElementById("city-result");
+var getTemp = document.getElementById("temp");
+var getWind = document.getElementById("wind");
+var getHumidity = document.getElementById("humidity");
+var getUV = document.getElementById("UV-index");
 // var weatherContainerEl = document.querySelector("#container-lg");
+
+var currentDate = moment().format("dddd, MMMM Do, YYYY");
+$("#currentDay").text(currentDate);
 
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
@@ -28,19 +36,32 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
       console.log(response);
       response.json().then(function(data) {
       console.log(data);
+      // Show city searched in current weather section
+      cityResult.innerHTML = data.city.name;
+      
+
 
         const lat = data.city.coord.lat;
         const lon = data.city.coord.lon;
-
-        fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=51a61d96cb3c110846e5130afe5ac605")
+        
+        // runs fetch of city data through lat and lon call to bring up actual city weather
+        fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=51a61d96cb3c110846e5130afe5ac605")
           .then(function (response) {
               return response.json();
               })
               .then(function (data) {
-                  appendData(data);
-              // Use the console to examine the response
+                  // appendData(data);
               console.log(data);
-              })
+              // const get = document.querySelector("forecast");
+              // for (i=0; i < getForecast; i++) {
+              //     getForecast[i].innerHTML = "";
+     
+              // }
+              getTemp.innerHTML = "Temp: " + data.current.temp + "&deg";
+              getWind.innerHTML = "Wind: " + data.current.wind_gust + " MPH";
+              getHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
+              getUV.innerHTML = "UV Index: " + data.current.uvi;
+            })
       });
     });
 
