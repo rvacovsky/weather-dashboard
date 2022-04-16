@@ -4,7 +4,7 @@ var cityResult = document.getElementById("city-result");
 var getTemp = document.getElementById("temp");
 var getWind = document.getElementById("wind");
 var getHumidity = document.getElementById("humidity");
-var getUV = document.getElementById("UV-index");
+var getUV = document.getElementById("uvindex");
 // var weatherContainerEl = document.querySelector("#container-lg");
 
 var currentDate = moment().format("dddd, MMMM Do, YYYY");
@@ -57,14 +57,27 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
               //     getForecast[i].innerHTML = "";
      
               // }
-              getTemp.innerHTML = "Temp: " + data.current.temp + "&deg";
+              getTemp.innerHTML = "Temp: " + data.current.temp + "&deg" + " F";
               getWind.innerHTML = "Wind: " + data.current.wind_gust + " MPH";
               getHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
               getUV.innerHTML = "UV Index: " + data.current.uvi;
+               
+              if (data.current.uvi <= 2.99) {
+                getUV.style.color = "green";
+              } else if (data.current.uvi >= 3 && getUV <= 5.99) {
+                getUV.style.color = "yellow";
+              } else if (data.current.uvi >= 6 && getUV <= 7.99) {
+                getUV.style.color = "orange";
+              } else (data.current.uvi >= 8)
+                getUV.style.color = "red";
+              
+                
             })
+
+         
       });
     });
 
-
+  
 };        
 cityFormEl.addEventListener("submit", formSubmitHandler);
