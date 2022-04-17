@@ -52,16 +52,15 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
               .then(function (data) {
                   // appendData(data);
               console.log(data);
-              // const get = document.querySelector("forecast");
-              // for (i=0; i < getForecast; i++) {
-              //     getForecast[i].innerHTML = "";
-     
-              // }
+              // Get weather pic
+              const weatherIcon = data.current.weather[0].icon;
+              var iconurl = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
+              $('#wicon').attr('src', iconurl);
               getTemp.innerHTML = "Temp: " + data.current.temp + "&deg" + " F";
               getWind.innerHTML = "Wind: " + data.current.wind_gust + " MPH";
               getHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
               getUV.innerHTML = "UV Index: " + data.current.uvi;
-               
+              // change color of text based on UV index 
               if (data.current.uvi <= 2.99) {
                 getUV.style.color = "green";
               } else if (data.current.uvi >= 3 && getUV <= 5.99) {
@@ -70,14 +69,26 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
                 getUV.style.color = "orange";
               } else (data.current.uvi >= 8)
                 getUV.style.color = "red";
-              
-                
+ 
             })
 
+
+        // 5-day forecast
+        var cityId = data.city.id;
+        console.log(cityId); 
+        fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&appid=51a61d96cb3c110846e5130afe5ac605")
+        .then(function(response) {
+          return response.json();
+        })
+        const getForecast = document.querySelectorAll("forecast");
+            for (i=0; i < getForecast.length; i++) {
+                getForecast[i].innerHTML = "";
+                console.log(getForecast);    
          
-      });
+      };
     });
 
   
-};        
-cityFormEl.addEventListener("submit", formSubmitHandler);
+});        
+};
+cityFormEl.addEventListener("submit", formSubmitHandler)
