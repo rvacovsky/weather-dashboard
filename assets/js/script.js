@@ -5,7 +5,8 @@ var getTemp = document.getElementById("temp");
 var getWind = document.getElementById("wind");
 var getHumidity = document.getElementById("humidity");
 var getUV = document.getElementById("uvindex");
-
+var savedCity = document.getElementById("city-button");
+var searchResults = JSON.parse(localStorage.getItem("search")) || [];
 
 // Current Date
 var currentDate = moment().format("dddd, MMMM Do, YYYY");
@@ -21,7 +22,6 @@ var day5 = moment().add(5, 'days').format("dddd, MMMM Do, YYYY");
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
-    console.log(cityInputEl);
     // get value from input element
     var cityName = cityInputEl.value.trim();
 
@@ -47,24 +47,33 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
       // Show city searched in current weather section
       cityResult.innerHTML = data.city.name;
       
+        // add searched city to history list
+        const node = document.createElement("div");
+        node.appendChild(document.createTextNode(data.city.name));
+        document.querySelector("#search-history").appendChild(node);
+       
+       
+    
 
-
+        //latitude and longitude from first API fetch to populate the onecall fetch
         const lat = data.city.coord.lat;
         const lon = data.city.coord.lon;
         
-        // runs fetch of city data through lat and lon call to bring up actual city weather
+        // runs fetch of city data through lat and lon to bring up actual city weather
         fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=51a61d96cb3c110846e5130afe5ac605")
           .then(function (response) {
               return response.json();
               })
               .then(function (data) {
-                  // appendData(data);
               console.log(data);
               // Get weather pic
               const weatherIcon = data.current.weather[0].icon;
               console.log(weatherIcon);
               var iconurl = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
               $('#wicon').attr('src', iconurl);
+
+              
+              // populate Current Weather
               getTemp.innerHTML = "Temp: " + data.current.temp + "&deg" + " F";
               getWind.innerHTML = "Wind: " + data.current.wind_gust + " MPH";
               getHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
@@ -132,7 +141,7 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
         getHumidity5.innerHTML = "Humidity: " + data.daily[4].humidity + " %";
         // the UV Index
         getUV1 = document.getElementById("uvindex1");
-        getUV.innerHTML = "UV Index: " + data.daily[0].uvi;
+        getUV1.innerHTML = "UV Index: " + data.daily[0].uvi;
         getUV2 = document.getElementById("uvindex2");
         getUV2.innerHTML = "UV Index: " + data.daily[1].uvi;
         getUV3 = document.getElementById("uvindex3");
@@ -142,23 +151,19 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
         getUV5 = document.getElementById("uvindex5");
         getUV5.innerHTML = "UV Index: " + data.daily[4].uvi;
         
-      })
-      //  var cityId = data.city.id;
-      //   console.log(cityId); 
-      //   fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&appid=51a61d96cb3c110846e5130afe5ac605")
-      //   .then(function(response) {
-      //     return response.json();
-      //   })
-      //   console.log(response);
-      //   const getForecast = document.querySelectorAll("forecast");
-      //       for (i=0; i < getForecast.length; i++) {
-      //           getForecast[i].innerHTML = "";
-      //           console.log(getForecast);     
-         
-      // };
-    });
+         // search saved cities
+         savedCity.addEventListener("click", function() {
+          const textCity = cityFormEl.value;
+          getWeather(text);
+          searchResults.push(textCity)
+          localStorage.setItem("search",json.stringify(searchReseults));
+          showSearchResults();
+        })
 
-  
+      })
+    });
 });        
 };
 cityFormEl.addEventListener("submit", formSubmitHandler)
+
+
