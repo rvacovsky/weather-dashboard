@@ -8,7 +8,77 @@
     <link href="./assets/css/style.css" rel="stylesheet">
     <title>Weather Dashboard</title>
 </head>
-<header>
+
+<body class="flex-column min-100-vh">
+  <header class="hero">
+    <h1 class="app-title"><i class="fab fa-github"></i> Weather Dashboard</h1>
+    <p>
+      Search for a city and get current temp as well as a 5-day forecast
+    </p>
+  </header>
+
+  <main class="flex-row justify-space-between">
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <h3 class="card-header text-uppercase">Search for a city:</h3>
+        <form id="city-search" class="card-body">
+          <label class="form-label" for="city">Username</label>
+          <input
+            name="city"
+            id="city"
+            type="text"
+            autofocus="true"
+            class="form-input"
+          />
+          <button type="submit" class="btn">Search</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 class="card-header text-uppercase">Saved City Searches</h3>
+        <div id="language-buttons" class="card-body">
+          <button saved-city="search-history" class="btn"></button>
+          <button saved-city="search-history" class="btn"></button>
+          <button saved-city="search-history" class="btn"></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="card">
+      <p id="currentDay"></p>
+      <h2 class="subtitle">
+        Current Weather in: <span id="weather-search"></span>
+      </h2>
+      <div id="weather-container" class="list-group"></div>
+      <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+      <div class="row">
+        <div id="temp"></div>
+      </div>
+      <div class="row">
+        <div id="wind"></div>
+      </div>
+      <div class="row">
+        <div id="humidity"></div>
+      </div>
+      <div class="row">
+        <div id="uvindex" class="uvindex"></div>
+      </div>
+      </div>
+    
+      <h2 class="subtitle">
+        5-Day Forecast for: <span id="weather-search"></span>
+      </h2>
+      <div id="weather-container" class="list-group"></div>
+    </div>
+  </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
+
+
+<!-- <header>
     <h2>Weather Dashboard</h2>
 </header>
 <body>
@@ -19,16 +89,16 @@
             <input name="city" id="city" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
             <button type="submit" class="input-group-text" id="inputGroup-sizing-default">Search</button>
         </form>
-        <div id=city-button class="btn btn-secondary btn-lg">
-          <div class="col-12">
-            <div type="button"  id="search-history"></div>
+        
+          <div class="col-12 btn btn-secondary btn-lg">
+            <div id="search-history"></div>
           </div>
-        </div>
+        
     </div>
     <div class="container-lg current border rounded">
       <p id="currentDay"></p>
-      <p>Current Weather in </p>
-      <p id="city-result" class="city-result"></p>
+      <p>Current Weather in: </p>
+      <p id="city-result" class="city-current"></p>
       <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
       <div class="row">
         <div id="temp"></div>
@@ -93,4 +163,4 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
-</html>
+</html> -->
