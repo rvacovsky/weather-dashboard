@@ -10,15 +10,11 @@ var savedCity = document.getElementById("search-history");
 var weatherSearchTerm = document.querySelector('#weather-search');
 var weatherContainerEl = document.querySelector('#weather-container');
 
+
 // Current Date
 var currentDate = moment().format("dddd, MMMM Do, YYYY");
 $("#currentDay").text(currentDate);
-//Forecast Dates
-var day1 = moment().add(1, 'days').format("dddd, MMMM Do, YYYY").toString();
-var day2 = moment().add(2, 'days').format("dddd, MMMM Do, YYYY");
-var day3 = moment().add(3, 'days').format("dddd, MMMM Do, YYYY");
-var day4 = moment().add(4, 'days').format("dddd, MMMM Do, YYYY");
-var day5 = moment().add(5, 'days').format("dddd, MMMM Do, YYYY");
+
 
 var citySearch = $("search-history").val();
 var searchResults = [];
@@ -69,7 +65,7 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + text + "&ap
        if (response.ok) {
         console.log(response);
           response.json().then(function(data) {
-          console.log(data);
+          console.log('forecastData', data);
           displayForecast(data, text);
        });
       } else {
@@ -100,15 +96,13 @@ var displayForecast = function (data, searchTerm) {
         return response.json();
         })
         .then(function (data) {
-        console.log(data);
         // Get weather pic
         const weatherIcon = data.current.weather[0].icon;
-        console.log(weatherIcon);
         var iconurl = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
         $('#wicon').attr('src', iconurl);
         // populate Current Weather
         getTemp.innerHTML = "Temp: " + data.current.temp + "&deg" + " F";
-        getWind.innerHTML = "Wind: " + data.current.wind_gust + " MPH";
+        getWind.innerHTML = "Wind: " + data.current.wind_speed + " MPH";
         getHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
         getUV.innerHTML = "UV Index: " + data.current.uvi;
         // change color of text based on UV index 
@@ -139,12 +133,14 @@ var getFuture = (data) => {
         })
         .then(function (data) {
         getForecast(data);
-      }); 
+        console.log(data)
+;      }); 
     }
 
-var getForecast = () => {
+function getForecast(data) {
+  console.log('getForecast input data', data)
   var forecast = data.list;
-    for (let i=1; forecast < 5; forecast++) {
+    for (let i=1; i < 5; i++) {
     var futureForecast =  forecast[i];
 
     var forecastEl = document.createElement('a');
