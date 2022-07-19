@@ -26,7 +26,8 @@ When the user clicks on a city in the search history, they are again presented w
 * HTML
 * CSS
 
-## Link to Deployed App in Heroku:
+## Link to Deployed App:
 
+https://rvacovsky.github.io/weather-dashboard/
 
 
