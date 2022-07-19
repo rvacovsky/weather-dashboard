@@ -1,32 +1,17 @@
 var cityFormEl = document.querySelector("#city-search");
 var cityInputEl = document.querySelector("#city");
-// var cityResult = document.getElementById("city-result");
-// var cityCurrent = document.querySelector("#city-current")
 var getTemp = document.getElementById("temp");
 var getWind = document.getElementById("wind");
 var getHumidity = document.getElementById("humidity");
 var getUV = document.getElementById("uvindex");
-var savedCity = document.getElementById("search-history");
 var weatherSearchTerm = document.querySelector("#weather-search");
 var weatherContainerEl = document.querySelector("#weather-container");
 var fiveDayForecast = document.getElementById("five-dayforecast");
+var CitySearchHistory = document.getElementById("history-search");
 
 // Current Date
 var currentDate = moment().format("dddd, MMMM Do, YYYY");
 $("#currentDay").text(currentDate);
-
-var citySearch = $("search-history").val();
-var searchResults = [];
-console.log(searchResults);
-// search saved cities
-// savedCity.addEventListener("click", function() {
-
-//   searchResults = JSON.parse(localStorage.getItem("searchResults")) || [];
-//   searchResults.push(citySearch);
-//   localStorage.setItem("searchResults",JSON.stringify(searchResults));
-
-//   getWeather(citySearch);
-// })
 
 // gets the city name from the search bar
 var formSubmitHandler = (event) => {
@@ -34,8 +19,8 @@ var formSubmitHandler = (event) => {
   event.preventDefault();
   // get value from input element
   var cityName = cityInputEl.value.trim();
-
   if (cityName) {
+    renderHistory(cityName);
     getWeather(cityName);
     weatherContainerEl.textContent = "";
     cityInputEl.value = "";
@@ -45,7 +30,7 @@ var formSubmitHandler = (event) => {
 };
 
 var buttonClickHandler = function (event) {
-  var savedCity = event.target.getAttribute("search-history");
+  var savedCity = event.target.getAttribute(CitySearchHistory);
 
   if (savedCity) {
     getWeather(savedCity);
@@ -76,6 +61,7 @@ var getWeather = (text) => {
     .catch(function (error) {
       alert("Unable to connect to OpenWeather");
     });
+    
 };
 
 var displayForecast = function (data, searchTerm) {
@@ -161,7 +147,7 @@ function getForecast(data) {
     iterCounter++;
     if (iterCounter <= 5) {
       console.log(i);
-      // foreCastDataObj["Day" + iterCounter] = i;
+      foreCastDataObj["Day" + iterCounter] = i;
       render5Day(i);
     }
   });
@@ -173,14 +159,14 @@ function render5Day(forecast) {
   var day = moment.unix(forecast.dt);
   var date = day._d;
   console.log(date);
+
   let forecastFiveDays = `
   <li>
     <ul>
-      <li>Day: ${date}</li>
-      <li>Temp:${forecast.temp.max} F</li>
-      <li>Wind:${forecast.wind_speed}MPH</li>
-      <li>Humidity:${forecast.humidity}%</li>
-      <li>UV:${forecast.uvi}</li>
+      <b>${date}</b>
+      <li>Temp: ${forecast.temp.max} F</li>
+      <li>Wind: ${forecast.wind_speed}MPH</li>
+      <li>Humidity: ${forecast.humidity}%</li>
     </ul>
     <br/>
   </li>
@@ -189,9 +175,15 @@ function render5Day(forecast) {
   forecastList += forecastFiveDays;
 }
 
-// // add searched city to history list
-// const node = document.createElement("div");
-// node.appendChild(document.createTextNode(data.city.name));
-// document.querySelector("#search-history").appendChild(node);
+var citySearchList = "";
+
+function renderHistory(city) { 
+  console.log(city);
+  let historyRender =`
+<button onclick="getWeather('${city}')" class="btn">${city}</button>`;
+
+citySearchList += historyRender;
+CitySearchHistory.innerHTML = citySearchList;
+}
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
