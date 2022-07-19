@@ -41,6 +41,7 @@ var buttonClickHandler = function (event) {
 
 // gets weather from city added
 var getWeather = (text) => {
+    forecastList = "";
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     text +
@@ -167,7 +168,7 @@ function render5Day(forecast) {
       <li>Temp: ${forecast.temp.max} F</li>
       <li>Wind: ${forecast.wind_speed}MPH</li>
       <li>Humidity: ${forecast.humidity}%</li>
-    </ul>
+    </ul> 
     <br/>
   </li>
   `;
